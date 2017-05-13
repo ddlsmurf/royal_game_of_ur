@@ -5,6 +5,7 @@
     "bluebird": "",
     "lodash": "",
     "es5-shim": "",
+    "bootstrap": "2.3.2",
     "jquery": "2.0.3",
     "requirejs": "2.1.8"
   }
