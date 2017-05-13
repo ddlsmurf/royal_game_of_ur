@@ -1,4 +1,5 @@
 block init
+  - var pathToRoot = (typeof relativeToRoot == 'undefined' ? "." : relativeToRoot)
 
 doctype html
 html.no-js
@@ -14,17 +15,17 @@ html.no-js
     block title
       title Mimosa
     block styles
-      link(rel='stylesheet', href='/stylesheets/style.css' + cachebust)
+      link(rel='stylesheet', href=pathToRoot + '/stylesheets/style.css' + cachebust)
 
     if reload
-      script(src='/socket.io/socket.io.js')
-      script(src='/javascripts/reload-client.js')
+      script(src=pathToRoot + '/socket.io/socket.io.js')
+      script(src=pathToRoot + '/javascripts/reload-client.js')
 
     block head
       if optimize
-        script(src='/javascripts/main-built.js')
+        script(src=pathToRoot + '/javascripts/main-built.js')
       else
-        script(src='/javascripts/vendor/requirejs/require.js', data-main='/javascripts/main.js')
+        script(src=pathToRoot + '/javascripts/vendor/requirejs/require.js', data-main='/javascripts/main.js')
 
   body
     block root
