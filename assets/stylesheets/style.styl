@@ -1,4 +1,26 @@
-body
-  padding 50px
-  font 14px "Lucida Grande", Helvetica, Arial, sans-serif
+fix_bootstrap_glyph_paths(pathPrefix)
+  [class^="icon-"],
+  [class*=" icon-"]
+    background-image url(pathPrefix + "glyphicons-halflings.png")
+  .icon-white,
+  .nav-pills > .active > a > [class^="icon-"],
+  .nav-pills > .active > a > [class*=" icon-"],
+  .nav-list > .active > a > [class^="icon-"],
+  .nav-list > .active > a > [class*=" icon-"],
+  .navbar-inverse .nav > .active > a > [class^="icon-"],
+  .navbar-inverse .nav > .active > a > [class*=" icon-"],
+  .dropdown-menu > li > a:hover > [class^="icon-"],
+  .dropdown-menu > li > a:focus > [class^="icon-"],
+  .dropdown-menu > li > a:hover > [class*=" icon-"],
+  .dropdown-menu > li > a:focus > [class*=" icon-"],
+  .dropdown-menu > .active > a > [class^="icon-"],
+  .dropdown-menu > .active > a > [class*=" icon-"],
+  .dropdown-submenu:hover > a > [class^="icon-"],
+  .dropdown-submenu:focus > a > [class^="icon-"],
+  .dropdown-submenu:hover > a > [class*=" icon-"],
+  .dropdown-submenu:focus > a > [class*=" icon-"]
+    background-image url(pathPrefix + "glyphicons-halflings-white.png")
+fix_bootstrap_glyph_paths("./vendor/bootstrap/")
 
+#content
+  margin-top 10px

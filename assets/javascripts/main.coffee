@@ -6,12 +6,16 @@ require
     lodash: 'vendor/lodash/lodash'
     _: 'vendor/lodash/lodash'
     promise: 'vendor/bluebird/bluebird'
+    bootstrap: 'vendor/bootstrap/bootstrap.min'
   shim: {
+    'bootstrap': deps: ['jquery']
   }, [
     'jquery'
     'templates'
+    'bootstrap'
   ], (
     $
     templates
+    bootstrap
   ) ->
     $("#content").html(templates['main']())
