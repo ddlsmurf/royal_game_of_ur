@@ -23,5 +23,7 @@ exports.config = {
             "": []
             }
         }
+    },
+    "viewLocalConfig": {
     }
 }
