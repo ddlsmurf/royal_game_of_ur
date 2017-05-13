@@ -1,6 +1,14 @@
 {
   "name": "royal_game_of_ur",
   "version": "0.0.1",
+  "private": true,
+  "license": "UNLICENSED",
+  "author": "Eric Doughty-Papassideris",
+  "directories": {
+    "bin": "./bin",
+    "man": "./man",
+    "lib": "./lib"
+  },
   "description": "A Mimosa starter skeleton",
   "dependencies": {
     "consolidate": "0.10.0",
