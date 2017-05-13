@@ -25,5 +25,7 @@ exports.config = {
         }
     },
     "viewLocalConfig": {
+        "clientSideGlobals": {
+        }
     }
 }

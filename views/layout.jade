@@ -17,6 +17,10 @@ html.no-js
     block styles
       link(rel='stylesheet', href=pathToRoot + '/stylesheets/style.css' + cachebust)
 
+    if config.clientSideGlobals
+      for value, key in config.clientSideGlobals
+        script window.!{key} = !{JSON.stringify(value).replace("script", "scr ipt")};
+
     script(src=pathToRoot + '/socket.io/socket.io.js')
     script(src=pathToRoot + '/javascripts/vendor/socket.io/client-exposed.js')
     if reload
