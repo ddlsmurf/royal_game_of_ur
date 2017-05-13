@@ -2,6 +2,9 @@
   "name": "royal_game_of_ur",
   "version": "0.1.0",
   "dependencies": {
+    "bluebird": "",
+    "lodash": "",
+    "es5-shim": "",
     "jquery": "2.0.3",
     "requirejs": "2.1.8"
   }
