@@ -1,17 +1,37 @@
+block init
+
 doctype html
-html
+html.no-js
   head
-    title Mimosa
-    link(rel='stylesheet', href='/stylesheets/style.css' + cachebust)
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    script (function (h,p) { h[p] = (h[p] || "").replace(/\bno-js\b/, "have-js"); })(document.getElementsByTagName("HTML")[0], "className");
+    style.
+      .have-js .only-if-no-js { display: none; }
+      .no-js .only-if-js { display: none; }
+    | <!--[if IE]>
+    script(src=pathToRoot + '/javascripts/vendor/es5-shim/es5-shim.js')
+    | <![endif]-->
+    block title
+      title Mimosa
+    block styles
+      link(rel='stylesheet', href='/stylesheets/style.css' + cachebust)
 
     if reload
       script(src='/socket.io/socket.io.js')
       script(src='/javascripts/reload-client.js')
 
-    if optimize
-      script(src='/javascripts/main-built.js')
-    else
-      script(src='/javascripts/vendor/requirejs/require.js', data-main='/javascripts/main.js')
+    block head
+      if optimize
+        script(src='/javascripts/main-built.js')
+      else
+        script(src='/javascripts/vendor/requirejs/require.js', data-main='/javascripts/main.js')
 
   body
-    block content
+    block root
+      noscript.only-if-no-js
+        p
+          strong JavaScript is required.
+          | &nbsp;Please enable it in your browser settings and refresh this page.
+      .only-if-js
+        block content
+      block document_end
