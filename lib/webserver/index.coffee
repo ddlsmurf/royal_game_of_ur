@@ -10,7 +10,7 @@ SocketIO = require 'socket.io'
 Utils = require '../utils'
 
 module.exports = (App, config, callback) ->
-  debugMode = config.overrideDebugMode ? (process.env.NODE_ENV isnt "production")
+  debugMode = config.debugMode ? (process.env.NODE_ENV isnt "production")
 
   App.webserver = webserver = Express()
   webserver.Express = Express
