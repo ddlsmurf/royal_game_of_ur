@@ -12,5 +12,16 @@ exports.config = {
     "coffeescript",
     "stylus",
     "jade"
-  ]
+  ],
+  "liveReload": {
+    "enabled": true
+  },
+  "bower": {
+    "bowerDir": { "clean": false },
+    "copy": {
+        "mainOverrides": {
+            "": []
+            }
+        }
+    }
 }
