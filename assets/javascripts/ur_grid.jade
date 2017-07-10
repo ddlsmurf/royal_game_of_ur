@@ -1,0 +1,24 @@
+table.ur_grid(border=0 cellpadding=0 cellspacing=0 align="center")
+  - var y = 0;
+  while y < 8
+    - var x = 0;
+    tr
+      while x < 3
+        - var is_edge_l = (y == 4 || y == 5) ? (x == 1) : (x == 0);
+        - var is_edge_r = (y == 4 || y == 5) ? (x == 1) : (x == 2);
+        - var is_edge_b = (y == 7) || ((y == 3) && ((x == 0) || (x == 2)));
+        - var is_edge_t = (y == 0) || ((y == 6) && ((x == 0) || (x == 2)));
+        - props = Ur.getCellProperties(x, y)
+        - var klasses = Object.keys(props);
+        if (!props.cell)
+          - klasses.push(x == 0 ? 'l' : 'r');
+        - if (x == 1 && y == 1) klasses.push('tutorial_5_capture_example');
+        - if (is_edge_l) klasses.push('is_edge_l');
+        - if (is_edge_r) klasses.push('is_edge_r');
+        - if (is_edge_t) klasses.push('is_edge_t');
+        - if (is_edge_b) klasses.push('is_edge_b');
+        td(class=klasses data-x=x data-y=y)
+          .token
+        - x++;
+    - y++;
+

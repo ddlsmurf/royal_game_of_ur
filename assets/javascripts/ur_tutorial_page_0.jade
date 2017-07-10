@@ -1,0 +1,29 @@
+.span6
+  h3 Tetrahedron dice system
+  p
+    | The Dice are 4 tetrahedrons, with 2 white tips each, as illustrated on the right.
+  p
+    | Once thrown, the value of the dice is obtained by counting the number of dice
+    | that have a white tip on top. Since each dice has a 50% chance of scoring 0 or 1,
+    | while values from 0 to 4 are possible, values in the middle (2) are more likely:
+  dl.dl-horizontal
+    dt 0 or 4
+    dd 1 / 16 (6.25%)
+    dt 1 or 3
+    dd 1 / 4 (25%)
+    dt 2
+    dd 3 / 8 (37.5%)
+  p During the game they are symbolised as a view from above, like this:
+  .dice_tutorial
+.span6
+  .row-fluid
+    .span12
+      p.text-right
+        a.muted(href="https://github.com/fofr/paulrhayes.com-experiments/blob/master/pyramid/css/experiment.css" target="_blank" style="font-size: x-small;") Tetrahedron adapted from work Copyright (c) 2009-2014 Paul Hayes
+      .tetrahedron
+        each x in Array(4)
+          .side
+        each c in ['a', 'b']
+          .tip(class=c)
+            each x in Array(3)
+              .axis

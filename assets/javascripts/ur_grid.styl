@@ -1,0 +1,67 @@
+
+@keyframes borderBlink {    
+    from, to {    
+        border-color pink    
+    }    
+    50% {    
+        border-color red
+    }    
+}
+
+.ur_grid
+  tokenSize = 30px
+  borderWidth = 1px
+  border-collapse separate
+  td
+    padding 10px
+    // &::before
+    //   content attr(data-x) " x " attr(data-y)
+    background-size 100% 100%
+    background-repeat no-repeat
+    border borderWidth solid #bbd
+    &.flashing
+      border-width 4px
+      animation: borderBlink 1s step-end infinite
+  .cell
+    background-color #ccf
+    &.rethrow
+      background-color pink
+    &.safe
+      background-color yellow
+  .starter, .ender
+    background-color transparent
+    border-color transparent
+  // .starter 
+  //   background-color #dfd
+  // .ender
+  //   background-color #fdd
+  .available
+    cursor pointer
+    .token
+      cursor pointer
+    
+  .is_edge_l
+    border-left   borderWidth solid black
+  .is_edge_r
+    border-right  borderWidth solid black
+  .is_edge_t
+    border-top    borderWidth solid black
+  .is_edge_b
+    border-bottom borderWidth solid black
+  .token
+    height tokenSize
+    width tokenSize
+    text-align center
+    line-height tokenSize
+    vertical-align middle
+    color white
+    font-weight bolder
+    border-radius 50%
+  .has_blue .token, .has_red .token
+      box-shadow: inset 3px 3px 5px 0px white, inset -1px -1px 5px 0px black, 3px 3px 5px 0px #444;
+  .has_blue
+    .token
+      background-color blue
+  .has_red
+    .token
+      background-color red

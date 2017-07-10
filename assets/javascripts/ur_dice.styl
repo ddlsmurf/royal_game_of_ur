@@ -1,0 +1,58 @@
+
+transitionMarginTop()
+  transition margin-top 500ms ease-in-out
+.ur_dice
+  height diceSize
+  overflow hidden
+  border 3px solid black
+  background-color #666
+  .left_player &
+    border-color blue
+  .right_player &
+    border-color red
+  .not_your_turn
+    height diceSize
+    line-height diceSize
+    text-align center
+    vertical-align middle
+    transitionMarginTop()
+    color black
+
+
+  .total
+    height diceSize
+    width diceSize
+    text-align center
+    line-height diceSize
+    vertical-align middle
+    font-size xx-large
+    float left
+    color black
+    margin-top diceSize
+    transitionMarginTop()
+  svg.dice
+    transitionMarginTop()
+    margin-top diceSize
+    width  diceSize
+    height diceSize
+    polygon
+      fill #666
+      stroke black
+      stroke-width 3
+    circle
+      opacity 0
+      fill #eee
+      stroke-width 1
+      stroke white
+
+    for i in 0..5
+      &[data-value=\"{i}\"]
+        circle.dice_marker_{i}
+          opacity 1
+  &.have_value
+    .total
+      margin-top 0
+    svg.dice
+      margin-top 0
+    .not_your_turn
+      margin-top -(diceSize)

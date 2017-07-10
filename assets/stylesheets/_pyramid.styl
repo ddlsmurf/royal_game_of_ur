@@ -1,0 +1,74 @@
+// @author Copied from https://github.com/fofr/paulrhayes.com-experiments/blob/master/pyramid/css/experiment.css
+
+sideSize = 400
+// triangleHeight = sideSize * sqrt(3) / 2
+.tetrahedron {
+    position: relative;
+    margin: 50px auto;
+    height: 400px;
+    width: 200px;
+    
+    transform-style: preserve-3d;
+    animation: spin 10s linear infinite;
+    transform-origin: 116px 200px 116px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  to {
+    transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+  }
+}
+
+.tetrahedron > .side
+    position: absolute;
+    border-style: solid;
+    border-width: 200px 0 200px 346px;
+    transform-origin: 0 0;
+
+tipHalfSize = 40
+tipATransform = rotateY(-19.5deg) rotateX(180deg) translateY(-400px)
+tipBTransform = rotateX(60deg) rotateY(19.5deg)
+.tetrahedron
+  .tip
+    transform-origin 0 0
+    position: absolute
+    .axis
+      position: absolute;
+      top -(tipHalfSize)px
+      left -(tipHalfSize)px
+      width 0
+      height 0
+      border (tipHalfSize)px solid rgba(255, 255, 255, 0.8);
+      border-radius 50%
+    &.a
+      .axis
+        &:first-child
+          transform tipATransform
+        &:nth-child(2)
+          transform tipATransform rotateX(90deg)
+        &:nth-child(3)
+          transform tipATransform rotateY(90deg)
+    &.b
+      .axis
+        &:first-child
+          transform tipBTransform
+        &:nth-child(2)
+          transform tipBTransform rotateX(90deg)
+        &:nth-child(3)
+          transform tipBTransform rotateY(90deg)
+
+.tetrahedron > .side:first-child
+    border-color: transparent transparent transparent rgba(50, 50, 50, 0.6);
+    transform:         tipATransform
+.tetrahedron > .side:nth-child(2)
+    border-color: transparent transparent transparent rgba(50, 50, 50, 0.6);
+    transform:         rotateY(90deg) rotateZ(60deg) rotateX(180deg) translateY(-400px);
+.tetrahedron > .side:nth-child(3)
+    border-color: transparent transparent transparent rgba(50, 50, 50, 0.9);
+    transform:         tipBTransform
+.tetrahedron > .side:nth-child(4)
+    border-color: transparent transparent transparent rgba(50, 50, 50, 0.8);
+    transform:         rotateX(-60deg) rotateY(19.5deg) translateX(-116px) translateY(-200px) translateZ(326px);

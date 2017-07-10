@@ -1,1 +1,30 @@
-h1.well Application content
+.row-fluid
+  .span12
+    .well.well-small
+      h4.text-center
+        a(href="https://www.youtube.com/watch?v=WZskjLq040I" target="_blank") Royal game of Ur
+        button#btn_restart.nodisplay.close &times;
+      #start_game_section
+        #tutorial
+          .row-fluid
+            .span12
+              p Click below to start a tutorial to explain the rules, or to start a new game
+        .row-fluid
+          .span12
+            hr
+            button.btn.btn-info#btn_tutorial_start Start tutorial
+            | &nbsp;
+            .btn-group
+              button.btn.btn-info#btn_tutorial_prev.nodisplay << Prev
+              button.btn.btn-info#btn_tutorial_next.nodisplay Next >>
+            | &nbsp;
+            .btn-group
+              a.btn.btn-success.dropdown-toggle#btn_start_game_local(data-toggle="dropdown" href="#")
+                | Play Offline &nbsp;
+                span.caret
+              ul.dropdown-menu
+                li: a#btn_start_game_local_human(href="#") vs Human
+                li: a#btn_start_game_ai_easy(href="#") vs Easy AI
+                //- li: a#btn_start_game_ai_hard(href="#") vs Average AI
+            | &nbsp;
+            button.btn.btn-danger#btn_start_game_remote Start online game
