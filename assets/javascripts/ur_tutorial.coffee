@@ -112,12 +112,12 @@ define [
       board.grid.flashSpecialCells('safe')
       onQuitPage = -> board.grid.flashSpecialCells()
     '7': ->
-      board.updateFromGame(new Ur.Game([ -1, [ 0, 1, 2, 3 ], [ 1, 2, 4, 6 ], [ 0, 8 ], [ 0, 0 ] ]))
+      board.updateFromGame(new Ur.Game(Ur.Game.ExampleStates.stuckByPositions))
       onQuitPage = ->
         board.reset()
         board.setDisabled(false)
     '8': ->
-      board.updateFromGame(new Ur.Game([  1, [ 0, 2, 4, 0 ], [ 6, 2 ], [ 5, 4 ], [ 0, 0 ] ]))
+      board.updateFromGame(new Ur.Game(Ur.Game.ExampleStates.stuckByDice))
       onQuitPage = ->
         board.reset()
         board.setDisabled(false)

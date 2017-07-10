@@ -85,6 +85,9 @@ define [
       @__onNewTurn()
       
   Ur.Game = class UrGame
+    @ExampleStates:
+      stuckByPositions: [ -1, [ 0, 1, 2, 3 ], [ 1, 2, 4, 6 ], [ 0, 8 ], [ 0, 0 ] ]
+      stuckByDice:      [  1, [ 0, 2, 4, 0 ], [ 6, 2 ],       [ 5, 4 ], [ 0, 0 ] ]
     constructor: (state) -> if state? then @safeLoadFromArray(state) else @reset()
     reset: -> @safeLoadFromArray([0, null, [ Ur.TokenCount ], [ Ur.TokenCount ], [ 0, 0 ]])
     validateGameState: ->
