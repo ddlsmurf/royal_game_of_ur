@@ -17,7 +17,8 @@ define [
   class UrBoard
     constructor: ->
       @grid = new UrGrid
-        onMove: (move, is_left) => @listener?.onMove(move, is_left)
+        onMove: (move, is_left)    => @listener?.onMove(move, is_left)
+        onConsiderMove: (position) => @listener?.onConsiderMove(position)
       @$el = $(templates['ur_board']())
       (@$board = @$el.find('.board')).append(@grid.$el)
       @$el.find('.left_player' ).append((@left  = new UrBoardPlayerSidebar(true)).$el)

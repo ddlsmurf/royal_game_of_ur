@@ -71,8 +71,8 @@ define [
         controller = @getPlayerController(turn)
         @game.throwDice() unless skipThrowDice
         if controller?
-          controller.yourTurn(@, @game)
-      @listener.onGameChange(@game, controller)
+          expectedMove = controller.yourTurn(@, @game)
+      @listener.onGameChange(@game, controller, expectedMove)
     abort: -> @aborted = true
     playMove: (move) ->
       throw new Error("Game aborted") if @aborted

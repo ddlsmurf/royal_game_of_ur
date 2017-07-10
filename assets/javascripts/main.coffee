@@ -40,7 +40,8 @@ require
             moves[0]
           else
             ai(moves)
-        setTimeout((-> controller.playMove(move)), 300)
+        setTimeout((-> controller.playMove(move)), 700)
+        move
 
     showBoard = (visible) ->
       $("#start_game_section").toggleClass('nodisplay', visible)
@@ -51,9 +52,11 @@ require
       UrTutorial.end()
       setTutorialStarted(false)
       game_listener =
-        onGameChange: (game, playerController) ->
+        onGameChange: (game, playerController, expectedMove) ->
           board.updateFromGame(game)
-          board.setDisabled(playerController?) if game.turn
+          if game.turn
+            board.setDisabled(playerController?)
+            board.grid.showPath(expectedMove, game.getDiceValue(), game.turn == -1) if expectedMove? && expectedMove != -1
       controller = new Ur.GameController(new Ur.Game(), game_listener,
         null, #makeAIPlayerController(rushAI),
         if ai? then makeAIPlayerController(ai))
@@ -62,6 +65,12 @@ require
           return if is_left? && (is_left != (controller.game.turn == -1))
           controller.playMove(position)
           board
+        onConsiderMove: (position) ->
+          game = controller.game
+          if position? && game.turn
+            board.grid.showPath(position, game.getDiceValue(), game.turn == -1)
+          else
+            board.grid.clearPath()
       showBoard(true)
 
     $startGameLocal  = $("#btn_start_game_local_human").click -> startGame(false)

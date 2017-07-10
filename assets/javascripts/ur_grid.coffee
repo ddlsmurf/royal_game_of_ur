@@ -53,11 +53,22 @@ define [
       @$el = $(templates['ur_grid']({Ur}))
       @clearCellTokens()
       grid = @
-      @$el.delegate 'td', 'click', ->
+      jqueryTDEventHandler = (fn) -> ->
         $cell = $(@)
         [x, y] = (parseInt($cell.attr("data-#{a}")) for a in ['x', 'y'])
-        grid.listener.onMove(Ur.getPositionFromXY(x, y)...)
+        fn.call(grid, x, y, Ur.getPositionFromXY(x, y), $cell)
+
+      @$el.delegate 'td', 'click', jqueryTDEventHandler (x, y, positionAndSide, $cell) ->
+        @listener.onMove(positionAndSide...)
+      @$el.delegate 'td', 'mouseenter', jqueryTDEventHandler (x, y, [position, side], $cell) ->
+        @setConsideredMove(position) if $cell.hasClass(UrCellClasses.available)
+      @$el.delegate 'td', 'mouseleave', jqueryTDEventHandler (x, y, positionAndSide, $cell) ->
+        @setConsideredMove()
       @
+    setConsideredMove: (position) ->
+      return false if @consideredMove == position
+      @consideredMove = position
+      @listener?.onConsiderMove(position)
     getCells: -> @$el.find("td")
     getCell: (x, y) -> @$el.find("td[data-x='#{x}'][data-y='#{y}']")
     clearPath: -> @getCells().css(backgroundImage: '')
@@ -79,12 +90,12 @@ define [
         xyPrev = xyNext
       @getCell(xyPrev[0], xyPrev[1]).css(backgroundImage: makeSVGBackgroundImageLine(color, previousExit, null))
       @
-    clearFlashingCells: -> @getCells().removeClass(UrCellClasses.flashing)
     clearAvailableMoveCells: -> @getCells().removeClass(UrCellClasses.available)
     showAvailableMoveCells: (moves, turn) ->
       moves.forEach (pos) =>
         [x, y] = Ur.getXYFromPosition(pos, turn == -1)
         @getCell(x, y).addClass(UrCellClasses.available)
+    clearFlashingCells: -> @getCells().removeClass(UrCellClasses.flashing)
     flashSpecialCells: (kind) ->
       @clearFlashingCells()
       @$el.find("td.#{kind}").addClass(UrCellClasses.flashing) if kind?
@@ -95,6 +106,8 @@ define [
     updateFromGame: (game) ->
       @clearAvailableMoveCells()
       @clearCellTokens()
+      @clearPath()
+      @setConsideredMove()
       @addCellToken(0, true, game.left_remaining)
       @addCellToken(0, false, game.right_remaining)
       @addCellToken(p, true, 1) for p in game.left_indices
