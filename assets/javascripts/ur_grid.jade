@@ -18,6 +18,8 @@ table.ur_grid(border=0 cellpadding=0 cellspacing=0 align="center")
         - if (is_edge_t) klasses.push('is_edge_t');
         - if (is_edge_b) klasses.push('is_edge_b');
         td(class=klasses data-x=x data-y=y)
+          | !{ templates['ur_grid_tile']({position: Ur.getPositionFromXY(x, y)}) }
+          .path
           .token
         - x++;
     - y++;

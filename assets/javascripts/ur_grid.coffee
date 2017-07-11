@@ -50,7 +50,9 @@ define [
 
   class UrGrid
     constructor: (@listener) ->
-      @$el = $(templates['ur_grid']({Ur}))
+      @$svg = $(templates['ur_grid_tiles']())
+      $('body').append(@$svg)
+      @$el = $(templates['ur_grid']({Ur, templates}))
       @clearCellTokens()
       grid = @
       jqueryTDEventHandler = (fn) -> ->
@@ -71,7 +73,8 @@ define [
       @listener?.onConsiderMove(position)
     getCells: -> @$el.find("td")
     getCell: (x, y) -> @$el.find("td[data-x='#{x}'][data-y='#{y}']")
-    clearPath: -> @getCells().css(backgroundImage: '')
+    getCellPath: (x, y) -> (if x? then @getCell(x, y) else @getCells()).find(".path")
+    clearPath: -> @getCellPath().css(backgroundImage: '')
     showPath: (start, count, is_left) ->
       throw new Error("Invalid start #{start}") if start < 0
       count = Ur.PositionMax - start - 1 if (start + count) >= Ur.PositionMax
@@ -85,10 +88,10 @@ define [
         start += 1
         xyNext = Ur.getXYFromPosition(start, is_left)
         movement = if xyNext[0] > xyPrev[0] then "r" else (if xyNext[0] < xyPrev[0] then "l" else (if xyNext[1] > xyPrev[1] then "b" else "t"))
-        @getCell(xyPrev[0], xyPrev[1]).css(backgroundImage: makeSVGBackgroundImageLine(color, previousExit, movement))
+        @getCellPath(xyPrev[0], xyPrev[1]).css(backgroundImage: makeSVGBackgroundImageLine(color, previousExit, movement))
         previousExit = movementFlip(movement)
         xyPrev = xyNext
-      @getCell(xyPrev[0], xyPrev[1]).css(backgroundImage: makeSVGBackgroundImageLine(color, previousExit, null))
+      @getCellPath(xyPrev[0], xyPrev[1]).css(backgroundImage: makeSVGBackgroundImageLine(color, previousExit, null))
       @
     clearAvailableMoveCells: -> @getCells().removeClass(UrCellClasses.available)
     showAvailableMoveCells: (moves, turn) ->

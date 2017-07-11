@@ -1,0 +1,104 @@
+svg(xmlns='http://www.w3.org/2000/svg', width='0', height='0', viewbox='0 0 1000 1000', style='position: absolute;')
+  defs
+    filter#svg_displacementFilter
+      feTurbulence(type='fractalNoise', basefrequency='0.01', numoctaves='2', result='turbulence')
+      feDisplacementMap(in2='turbulence', in='SourceGraphic', scale='50', xchannelselector='R', ychannelselector='G')
+    filter#svg_stainFilter
+      feTurbulence(type='fractalNoise', basefrequency='0.03', numoctaves='3', result='turbulence')
+      feColorMatrix(in='turbulence', type='saturate', values='0', result='bw')
+      feDiffuseLighting(in='bw', result='light', lighting-color='#dcc7a9')
+        feDistantLight(azimuth='240', elevation='20')
+    rect#svg_bkg(x='0', y='0', width='1000', height='1000', style='filter: url(#svg_stainFilter)')
+    // Eyes
+    mask#svg_eye_mask(x='25', y='0', width='450', height='1000', maskcontentunits='userSpaceOnUse', maskunits='userSpaceOnUse')
+      rect(x='25', y='0', width='450', height='1000', fill='white')
+    g#svg_eye
+      // size is 500x500
+      circle(cx='250', cy='250', r='50', fill='#007')
+      path(d='M 0 200 Q 150 100 250 100 Q 350 100 500 200')
+      path(d='M 0 300 Q 150 400 250 400 Q 350 400 500 300')
+      path(d='M 0 250 Q 150 150 250 150 Q 350 150 500 250 Q 350 350 250 350 Q 150 350 0 250 ')
+    g#svg_eyes_quadrant_side_lines
+      path(d='M  35 0 L  35 550')
+      path(d='M 465 0 L 465 550')
+    g#svg_eyes_quadrant_top(mask='url(#svg_eye_mask)')
+      use(xlink:href='#svg_eye', transform='translate(0 -50)')
+      use(xlink:href='#svg_eyes_quadrant_side_lines')
+    g#svg_eyes_quadrant_bottom(mask='url(#svg_eye_mask)')
+      use(xlink:href='#svg_eye', transform='translate(0 50)')
+      use(xlink:href='#svg_eyes_quadrant_side_lines')
+    g#svg_eye_square_row
+      rect(x=' 40', y='380', width='80', height='80')
+      rect(x='165', y='380', width='80', height='80')
+      rect(x='245', y='380', width='80', height='80')
+      rect(x='375', y='380', width='80', height='80')
+    g#svg_eyes_thing
+      path(d='M 0 380 L 1000 380')
+      use(xlink:href='#svg_eye_square_row', transform='')
+      use(xlink:href='#svg_eye_square_row', transform='translate(0 160)')
+      use(xlink:href='#svg_eye_square_row', transform='translate(500 0)')
+      use(xlink:href='#svg_eye_square_row', transform='translate(500 160)')
+      use(xlink:href='#svg_eyes_quadrant_top', transform='')
+      use(xlink:href='#svg_eyes_quadrant_top', transform='translate(500 0)')
+      use(xlink:href='#svg_eyes_quadrant_bottom', transform='translate(0 500)')
+      use(xlink:href='#svg_eyes_quadrant_bottom', transform='translate(500 500)')
+    use#svg_eyes_thing_bottom(xlink:href='#svg_eyes_thing', transform='translate(500 500) rotate(180) translate(-500 -500)')
+    // Little squares
+    g#svg_eyed_square
+      rect(x='0', y='0', width='200', height='200')
+      circle(cx='100', cy='100', r='50', fill='#007')
+    g#svg_eyed_square_quadrant
+      // size is 500x500
+      rect(x='0', y='0', width='450', height='450')
+      rect(x='0', y='250', width='200', height='200')
+      use(xlink:href='#svg_eyed_square', transform='')
+      use(xlink:href='#svg_eyed_square', transform='translate(250 0)')
+      use(xlink:href='#svg_eyed_square', transform='translate(250 250)')
+    g#svg_little_squares(transform='translate(500, 500) scale(0.9) translate(-500, -500)')
+      rect(x='0', y='0', width='1000', height='1000')
+      use(xlink:href='#svg_eyed_square_quadrant', transform='')
+      use(xlink:href='#svg_eyed_square_quadrant', transform='translate(550   0) translate(225 225) rotate(-90) translate(-225 -225)')
+      use(xlink:href='#svg_eyed_square_quadrant', transform='translate(  0 550) translate(225 225) rotate( 90) translate(-225 -225)')
+      use(xlink:href='#svg_eyed_square_quadrant', transform='translate(550 550) translate(225 225) rotate(180) translate(-225 -225)')
+    // Rosettes
+    path#svg_petal(d='M 0 0 Q 200 100 250 0 Q 200 -100 0 0', transform='translate(100 0)')
+    g#svg_petal_pair(transform='translate(0 0)')
+      use(xlink:href='#svg_petal', fill='#007', transform='rotate(20)')
+      use(xlink:href='#svg_petal', fill='#500', transform='rotate(70)')
+      path(d='M 0 350 L 250 450 L 200 200 L 450 250 L 350 0 ', fill='none', stroke='black')
+      path(d='M 100 100 L 160 160 L 360 200', fill='none', stroke='black')
+      path(d='M 160 160 L 200 360', fill='none', stroke='black')
+      path(d='M 140 0 L 310 0 L 340 60', fill='none', stroke='black')
+      path(d='M 0 310 L 60 340', fill='none', stroke='black')
+    g#svg_rosette
+      circle(cx='500', cy='500', r='100', fill='#500')
+      use(xlink:href='#svg_petal_pair', transform='translate(500 500)')
+      use(xlink:href='#svg_petal_pair', transform='translate(500 500) rotate(90)')
+      use(xlink:href='#svg_petal_pair', transform='translate(500 500) rotate(180)')
+      use(xlink:href='#svg_petal_pair', transform='translate(500 500) rotate(270)')
+    // Blue circles
+    g#svg_circle_circle(transform='translate(250 250)')
+      circle(cx='0', cy='0', r='75', fill='#007', stroke='none')
+      circle(cx='0', cy='0', r='120', fill='none', stroke='black')
+    g#svg_five_circles
+      use(xlink:href='#svg_circle_circle')
+      use(xlink:href='#svg_circle_circle', transform='translate(500 0)')
+      use(xlink:href='#svg_circle_circle', transform='translate(0 500)')
+      use(xlink:href='#svg_circle_circle', transform='translate(500 500)')
+      use(xlink:href='#svg_circle_circle', transform='translate(250 250)')
+    // Wavy box
+    path#svg_wavy_box(fill='none', d='M0,71 L71,0 L214,143 L357,0 L500,143 L643,0 L786,143 L929,0 L1000,71 L857,214 L1000,357 L857,500 L1000,643 L857,786 L1000,929 L929,1000 L786,857 L643,1000 L500,857 L357,1000 L214,857 L71,1000 L0,929 L143,786 L0,643 L143,500 L0,357 L143,214 L0,71')
+    // 4 x Wavy box with circles
+    g#svg_five_circles_in_wavy_quadrant
+      use(xlink:href='#svg_wavy_box', transform='')
+      use(xlink:href='#svg_five_circles', transform='translate(500, 500) scale(0.8) translate(-500, -500)')
+    g#svg_five_circles_in_wavy(stroke-width='40')
+      use(xlink:href='#svg_five_circles_in_wavy_quadrant', transform='translate(50, 50) scale(0.4)')
+      use(xlink:href='#svg_five_circles_in_wavy_quadrant', transform='translate(50, 550) scale(0.4)')
+      use(xlink:href='#svg_five_circles_in_wavy_quadrant', transform='translate(550, 50) scale(0.4)')
+      use(xlink:href='#svg_five_circles_in_wavy_quadrant', transform='translate(550, 550) scale(0.4)')
+      path(d='M 0 500 L 1000 500 M 500 0 L 500 1000', stroke-width='20')
+    // Circles in Wavy box in Wavy box
+    g#svg_five_circles_in_wavy_in_wavy(transform='translate(500, 500) scale(0.9) translate(-500, -500)')
+      use(xlink:href='#svg_wavy_box', transform='')
+      use(xlink:href='#svg_five_circles_in_wavy_quadrant', stroke-width='30', transform='translate(500, 500) scale(0.6) translate(-500, -500)')

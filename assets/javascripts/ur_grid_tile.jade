@@ -1,0 +1,7 @@
+//-               0           1                        2                3          4                   5
+- var designs = "svg_eyes_thing svg_eyes_thing_bottom svg_little_squares svg_rosette svg_five_circles svg_five_circles_in_wavy svg_five_circles_in_wavy_in_wavy".split(" ")
+if (position[0] != 0 && position[0] != 15)
+  - var index = [position[1] ? 0 : 1, 4, 0, 3, 2, 4, 5, 3, 4, 5, 0, 4, 6, 3][position[0] - 1];
+  svg(viewbox='0 0 1000 1000')
+    use(xlink:href='#svg_bkg')
+    use(xlink:href="##{designs[index]}")
