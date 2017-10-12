@@ -29,20 +29,6 @@ require
     $("#content").append(board.$el)
     controller = null
 
-    rushAI = (moves) -> moves[moves.length - 1]
-    makeAIPlayerController = (ai) ->
-      yourTurn: (controller, game) ->
-        moves = game.getAvailableMoves()
-        move = switch moves.length
-          when 0
-            -1
-          when 1
-            moves[0]
-          else
-            ai(moves)
-        setTimeout((-> controller.playMove(move)), 700)
-        move
-
     showBoard = (visible) ->
       $("#start_game_section").toggleClass('nodisplay', visible)
       $restartButton.toggleClass("nodisplay", !visible)
@@ -57,9 +43,9 @@ require
           if game.turn
             board.setDisabled(playerController?)
             board.grid.showPath(expectedMove, game.getDiceValue(), game.turn == -1) if expectedMove? && expectedMove != -1
-      controller = new Ur.GameController(new Ur.Game(), game_listener,
-        null, #makeAIPlayerController(rushAI),
-        if ai? then makeAIPlayerController(ai))
+      controller = new Ur.GameController(game_listener,
+        null, #Ur.AI.toController(rushAI, 700),
+        if ai? then Ur.AI.toController(ai, 700))
       board.listener =
         onMove: (position, is_left) ->
           return if is_left? && (is_left != (controller.game.turn == -1))
@@ -74,8 +60,9 @@ require
       showBoard(true)
 
     $startGameLocal  = $("#btn_start_game_local_human").click -> startGame(false)
-    $startGameAIEasy = $("#btn_start_game_ai_easy").    click -> startGame(false, rushAI)
-    $startGameAIHard = $("#btn_start_game_ai_hard").    click -> startGame(false, rushAI)
+    $startGameAIEasy = $("#btn_start_game_ai_easy").    click -> startGame(false, Ur.AI.rush)
+    $startGameAIHard = $("#btn_start_game_ai_avg").     click -> startGame(false, Ur.AI.middle)
+    $startGameAIHard = $("#btn_start_game_ai_hard").    click -> startGame(false, Ur.AI.hard)
     $startGameRemote = $("#btn_start_game_remote").     click -> startGame(true)
 
     $restartButton = $("#btn_restart").click ->
@@ -104,6 +91,7 @@ require
 
     # setTimeout((-> $startGameLocal.click()), 100)
     # setTimeout((-> $startGameAIEasy.click()), 100)
+    # setTimeout((-> $startGameAIHard.click()), 100)
     # setTimeout((-> $startGameRemote.click()), 100)
     # setTimeout((-> $startTutorialButton.click()), 100)
     # setTimeout((-> $nextTutorialButton.click()), 200)

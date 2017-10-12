@@ -13,7 +13,6 @@ define [
   UrGrid
   UrBoardPlayerSidebar
 ) ->
-
   class UrBoard
     constructor: ->
       @grid = new UrGrid
@@ -43,11 +42,17 @@ define [
         @setMessage("#{if winner == -1 then 'Left' else 'Right'} player won !")
         @setDisabled(true)
       else
+        @grid.getCells().css opacity: 1
         try
           moves = @game.getAvailableMoves()
           @grid.showAvailableMoveCells(moves, game.turn)
           if (moves.length == 0)
             @$btnPassTurn.removeClass('nodisplay')
+          riskCells = game.getAttackRiskMap(if game.turn < 0 then 1 else -1)
+          # @grid.getCells.find(".debug").text("")
+          for val, pos in riskCells
+            [x, y] = Ur.getXYFromPosition(pos, game.turn < 0)
+            @grid.getCell(x, y).find(".risk").text(if val == 0 then "" else val)
           @setDisabled(false)
         catch e # Ignore errors like no turn
           @setDisabled(true)

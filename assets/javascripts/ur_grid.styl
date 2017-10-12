@@ -5,36 +5,32 @@
     }    
     50% {    
         border-color red
+        opacity 0.5
     }    
 }
 
 .ur_grid
   borderWidth = 1px
   border-collapse separate
+  padding 10px
+  // position absolute
+  // top 50px
+  // left 50%
+  // transform translate(-50%, 0)
   td
-    // &::before
-    //   content attr(data-x) " x " attr(data-y)
+    color white
     border borderWidth solid black
     position relative
     width (tokenSize + 2 * tokenPaddingSize)px
     height (tokenSize + 2 * tokenPaddingSize)px
     &.flashing
-      border-width 4px
       animation: borderBlink 1s step-end infinite
   .cell
-    background-color #ccf
-    &.rethrow
-      background-color pink
-    &.safe
-      background-color yellow
+    background-color black
     box-shadow: 5px 5px 5px 0px #333;
   .starter, .ender
     background-color transparent
     border-color transparent
-  // .starter 
-  //   background-color #dfd
-  // .ender
-  //   background-color #fdd
   .available
     cursor pointer
     .token
@@ -48,32 +44,46 @@
     border-top    borderWidth solid black
   .is_edge_b
     border-bottom borderWidth solid black
-  .token
+  ur_grid_cell_layer(padding = 0)
     position absolute
-    top (tokenPaddingSize)px
-    left (tokenPaddingSize)px
-    height tokenSize
-    width tokenSize
+    top (padding)px
+    left (padding)px
+    width (tokenSize + 2 * (tokenPaddingSize - padding))px
+    height (tokenSize + 2 * (tokenPaddingSize - padding))px
+  .token
+    ur_grid_cell_layer(tokenPaddingSize)
     text-align center
     line-height tokenSize
     vertical-align middle
-    color white
     font-weight bolder
     border-radius 50%
   .path
-    position absolute
-    top 0
-    left 0
-    width (tokenSize + 2 * tokenPaddingSize)px
-    height (tokenSize + 2 * tokenPaddingSize)px
+    ur_grid_cell_layer()
     background-size 100% 100%
     background-repeat no-repeat
     opacity 0.5
+  .risk
+    ur_grid_cell_layer()
+    display none
+    body.showRisk &
+      display block
+  .positionHint
+    ur_grid_cell_layer()
+    color white
+    vertical-align baseline
+    line-height (tokenSize + 2 * tokenPaddingSize)px
+    font-size (tokenSize)px
+    opacity 0
+    transition opacity 500ms ease-in-out
+    .flashPositionHint &
+      opacity 1
+    
   .has_blue .token, .has_red .token
       box-shadow: inset 3px 3px 5px 0px white, inset -1px -1px 5px 0px black, 3px 3px 5px 0px #444;
   .has_blue
     .token
-      background-color blue
+      background-color #11c
   .has_red
     .token
-      background-color red
+      background-color #c11
+

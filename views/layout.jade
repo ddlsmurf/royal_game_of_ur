@@ -1,6 +1,22 @@
 block init
   - var pathToRoot = (typeof relativeToRoot == 'undefined' ? "." : relativeToRoot)
 
+mixin inlineable_tag()
+  if attributes.src
+    - var inlined = (readResource ? readResource(attributes.src) : null)
+    if inlined
+      script!= inlined
+    else
+      script&attributes(attributes)
+  else if attributes.href
+    - var inlined = (readResource ? readResource(attributes.href) : null)
+    if inlined
+      style(type="text/css") !{inlined}
+    else
+      link(rel='stylesheet')&attributes(attributes)
+  else
+    - throw new Error("Invalid attributes " + JSON.stringify(attributes))
+
 doctype html
 html.no-js
   head
@@ -9,28 +25,37 @@ html.no-js
     style.
       .have-js .only-if-no-js { display: none; }
       .no-js .only-if-js { display: none; }
+    if favicon64
+      //- prevent http request
+      link(rel="shortcut icon" type="image/x-icon" href="data:image/x-icon;,")
+      script.
+        var link = document.createElement("link");
+        link.rel = 'shortcut icon'
+        link.href = 'data:image/png;base64,' + !{JSON.stringify(favicon64)};
+        document.getElementsByTagName("head")[0].appendChild(link);
     | <!--[if IE]>
     script(src=pathToRoot + '/javascripts/vendor/es5-shim/es5-shim.js')
     | <![endif]-->
     block title
       title Royal game of Ur
     block styles
-      link(rel='stylesheet', href=pathToRoot + '/stylesheets/vendor/bootstrap/bootstrap.css')
-      link(rel='stylesheet', href=pathToRoot + '/stylesheets/vendor/bootstrap/bootstrap-responsive.css')
-      link(rel='stylesheet', href=pathToRoot + '/stylesheets/style.css' + cachebust)
+      +inlineable_tag(href=pathToRoot + '/stylesheets/vendor/bootstrap/bootstrap.css')
+      +inlineable_tag(href=pathToRoot + '/stylesheets/vendor/bootstrap/bootstrap-responsive.css')
+      +inlineable_tag(href=pathToRoot + '/stylesheets/style.css' + cachebust)
 
     if config.clientSideGlobals
       for value, key in config.clientSideGlobals
         script window.!{key} = !{JSON.stringify(value).replace("script", "scr ipt")};
 
-    script(src=pathToRoot + '/socket.io/socket.io.js')
-    script(src=pathToRoot + '/javascripts/vendor/socket.io/client-exposed.js')
-    if reload
-      script(src=pathToRoot + '/javascripts/vendor/socket.io/reload-client-exposed.js')
+    if !offline
+      script(src=pathToRoot + '/socket.io/socket.io.js')
+      script(src=pathToRoot + '/javascripts/vendor/socket.io/client-exposed.js')
+      if reload
+        script(src=pathToRoot + '/javascripts/vendor/socket.io/reload-client-exposed.js')
 
     block head
       if optimize
-        script(src=pathToRoot + '/javascripts/main-built.js')
+        +inlineable_tag(src=pathToRoot + '/javascripts/main-built.js')
       else
         script(src=pathToRoot + '/javascripts/vendor/requirejs/require.js', data-main='/javascripts/main.js')
 

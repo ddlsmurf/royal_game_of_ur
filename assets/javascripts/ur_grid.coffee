@@ -8,6 +8,15 @@ define [
   Ur
 ) ->
 
+  $("body").keypress (e) ->
+    if e.charCode?
+      handler = window.keyHandler?[(c = String.fromCharCode(e.charCode).toLowerCase())]
+      if handler then handler(c) else console.log "Got #{JSON.stringify(c, null, 2)}"
+  (window.keyHandler ?= {}).r = -> $("body").toggleClass("showRisk")
+  (window.keyHandler ?= {}).f = ->
+    $("body").addClass("flashPositionHint")
+    setTimeout((-> $("body").removeClass("flashPositionHint")), 500)
+
   UrCellClasses =
     hasLeft: 'has_blue'
     hasRight: 'has_red'
@@ -61,12 +70,25 @@ define [
         fn.call(grid, x, y, Ur.getPositionFromXY(x, y), $cell)
 
       @$el.delegate 'td', 'click', jqueryTDEventHandler (x, y, positionAndSide, $cell) ->
-        @listener.onMove(positionAndSide...)
-      @$el.delegate 'td', 'mouseenter', jqueryTDEventHandler (x, y, [position, side], $cell) ->
+        @listener?.onMove(positionAndSide...)
+      @$el.delegate 'td', 'mouseenter mousemove', jqueryTDEventHandler (x, y, [position, side], $cell) ->
         @setConsideredMove(position) if $cell.hasClass(UrCellClasses.available)
       @$el.delegate 'td', 'mouseleave', jqueryTDEventHandler (x, y, positionAndSide, $cell) ->
         @setConsideredMove()
+      @setKeyboardShortucts(true)
       @
+    setKeyboardShortucts: (handled) ->
+      for i in [0...Ur.PositionMax - 1]
+        do (i) =>
+          key = i.toString(16)
+          (window.keyHandler ?= {})[key] = if !handled then null else (=>
+            @listener?.onMove(i, @turn == -1)
+          )
+        (window.keyHandler ?= {})[' '] = if !handled then null else (=> @listener?.onMove(-1, @turn == -1))
+      @
+    remove: ->
+      @setKeyboardShortucts false
+      @$el.remove()
     setConsideredMove: (position) ->
       return false if @consideredMove == position
       @consideredMove = position
@@ -107,6 +129,7 @@ define [
       [x, y] = Ur.getXYFromPosition(p, is_left)
       @getCell(x, y).toggleClass(UrCellClasses.hasLeft, (count > 0) && is_left).toggleClass(UrCellClasses.hasRight, (count > 0) && (!is_left)).find('.token').text(if count > 1 then count else '')
     updateFromGame: (game) ->
+      @turn = game.turn
       @clearAvailableMoveCells()
       @clearCellTokens()
       @clearPath()

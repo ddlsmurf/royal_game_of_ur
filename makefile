@@ -8,6 +8,10 @@ start:
 	@echo "[x] Building assets and starting development server..."
 	$(MIMOSA) watch -s
 
+doc:
+	codo assets/javascripts/
+	# --undocumented
+
 starto:
 	@echo "[x] Building assets and starting development server..."
 	$(MIMOSA) watch -s -d $(MIMOSA_PROD_ARGS)

@@ -11,6 +11,7 @@ exports.config = {
     "bower",
     "coffeescript",
     "stylus",
+    "client-jade-static",
     "jade"
   ],
   "liveReload": {
@@ -34,6 +35,19 @@ exports.config = {
     },
     "viewLocalConfig": {
         "clientSideGlobals": {
+        }
+    },
+    "clientJadeStatic": {
+        "context": {
+            "offline": true,
+            "reload": false,
+            "prod": true,
+            "optimize": true,
+            "cachebust": "",
+            "config": {
+                "clientSideGlobals": {
+                }
+            }
         }
     }
 }

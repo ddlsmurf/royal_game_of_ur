@@ -22,6 +22,11 @@ fix_bootstrap_glyph_paths(pathPrefix)
     background-image url(pathPrefix + "glyphicons-halflings-white.png")
 fix_bootstrap_glyph_paths("./vendor/bootstrap/")
 
+.btn-inverse
+  color #ccc
+  .close
+    color white
+
 .nodisplay
   display none
   
@@ -29,21 +34,8 @@ body
   background-color #555
   overflow hidden
 
-#content
-  margin-top 10px
-
 @import "_pyramid"
 
-.tutorial
-  background-color #eee
-  margin-top 10px
-  margin-bottom 10px
-  .span12
-    padding 10px
-
-hr
-  border-top 1px solid #999
-  border-bottom 1px solid #aaa
 
   
 diceSize = 50px
@@ -56,3 +48,4 @@ tokenPaddingSize = 20px
 @import "../javascripts/ur_grid_tiles"
 @import "../javascripts/ur_board"
 @import "../javascripts/ur_board_player_sidebar"
+@import "../javascripts/main"

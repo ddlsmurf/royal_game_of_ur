@@ -8,7 +8,8 @@ table.ur_grid(border=0 cellpadding=0 cellspacing=0 align="center")
         - var is_edge_r = (y == 4 || y == 5) ? (x == 1) : (x == 2);
         - var is_edge_b = (y == 7) || ((y == 3) && ((x == 0) || (x == 2)));
         - var is_edge_t = (y == 0) || ((y == 6) && ((x == 0) || (x == 2)));
-        - props = Ur.getCellProperties(x, y)
+        - var props = Ur.getCellProperties(x, y)
+        - var position = Ur.getPositionFromXY(x, y)[0]
         - var klasses = Object.keys(props);
         if (!props.cell)
           - klasses.push(x == 0 ? 'l' : 'r');
@@ -19,8 +20,11 @@ table.ur_grid(border=0 cellpadding=0 cellspacing=0 align="center")
         - if (is_edge_b) klasses.push('is_edge_b');
         td(class=klasses data-x=x data-y=y)
           | !{ templates['ur_grid_tile']({position: Ur.getPositionFromXY(x, y)}) }
+          .risk
           .path
           .token
+          if !props.ender
+            .positionHint= position.toString(16)
         - x++;
     - y++;
 

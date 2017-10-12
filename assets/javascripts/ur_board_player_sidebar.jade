@@ -1,3 +1,23 @@
 .ur_board_player_sidebar
   .dice
-  h3.captures(class=is_left ? '' : 'text-right') 4 captures
+  h3.captures(class=is_left ? '' : 'text-right') 0 captures
+  dl.dl-horizontal
+    dt Throw count
+    dd(data-stat="getThrowCount") 0
+    dt Total throw distance
+    dd(data-stat="getTotalThrows") 0
+    dt Rethrows
+    dd(data-stat="rethrows") 0
+    dt Wasted
+    dd(data-stat="wasted") 0
+    dt Was first
+    dd(data-stat="was_first") 0
+    dt Times blocked
+    dd(data-stat="blocks") 0
+    dt Blocked by board
+    dd(data-stat="getBlockedWithoutDice") 0
+    - var x = 0
+    while x <= Ur.DiceCount
+      dt Throws of #{x}
+      dd(data-dice="#{x}") 0
+      - x++

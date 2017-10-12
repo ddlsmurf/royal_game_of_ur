@@ -1,9 +1,12 @@
 .row-fluid
   .span12
-    .well.well-small
+    .well.well-small.title-bar
       h4.text-center
         a(href="https://www.youtube.com/watch?v=WZskjLq040I" target="_blank") Royal game of Ur
-        button#btn_restart.nodisplay.close &times;
+      button#btn_restart.btn.btn-small.btn-inverse.nodisplay
+        | Reset&nbsp;&nbsp;
+        span.close(style="float: none;") &times;
+        //- button#btn_restart.nodisplay.close &times;
       #start_game_section
         #tutorial
           .row-fluid
@@ -25,6 +28,7 @@
               ul.dropdown-menu
                 li: a#btn_start_game_local_human(href="#") vs Human
                 li: a#btn_start_game_ai_easy(href="#") vs Easy AI
-                //- li: a#btn_start_game_ai_hard(href="#") vs Average AI
+                li: a#btn_start_game_ai_avg(href="#") vs Average AI
+                li: a#btn_start_game_ai_hard(href="#") vs Hard AI
             | &nbsp;
-            button.btn.btn-danger#btn_start_game_remote Start online game
+            //- button.btn.btn-danger#btn_start_game_remote Start online game

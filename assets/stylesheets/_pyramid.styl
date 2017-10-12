@@ -7,7 +7,7 @@ sideSize = 400
     margin: 50px auto;
     height: 400px;
     width: 200px;
-    
+
     transform-style: preserve-3d;
     animation: spin 10s linear infinite;
     transform-origin: 116px 200px 116px;
@@ -37,8 +37,8 @@ tipBTransform = rotateX(60deg) rotateY(19.5deg)
     position: absolute
     .axis
       position: absolute;
-      top -(tipHalfSize)px
-      left -(tipHalfSize)px
+      top 0 -(tipHalfSize)px
+      left 0 -(tipHalfSize)px
       width 0
       height 0
       border (tipHalfSize)px solid rgba(255, 255, 255, 0.8);
@@ -59,16 +59,14 @@ tipBTransform = rotateX(60deg) rotateY(19.5deg)
           transform tipBTransform rotateX(90deg)
         &:nth-child(3)
           transform tipBTransform rotateY(90deg)
+.tetrahedron > .side
+    border-color: transparent transparent transparent rgba(0, 0, 0, 0.3);
 
 .tetrahedron > .side:first-child
-    border-color: transparent transparent transparent rgba(50, 50, 50, 0.6);
     transform:         tipATransform
 .tetrahedron > .side:nth-child(2)
-    border-color: transparent transparent transparent rgba(50, 50, 50, 0.6);
     transform:         rotateY(90deg) rotateZ(60deg) rotateX(180deg) translateY(-400px);
 .tetrahedron > .side:nth-child(3)
-    border-color: transparent transparent transparent rgba(50, 50, 50, 0.9);
     transform:         tipBTransform
 .tetrahedron > .side:nth-child(4)
-    border-color: transparent transparent transparent rgba(50, 50, 50, 0.8);
     transform:         rotateX(-60deg) rotateY(19.5deg) translateX(-116px) translateY(-200px) translateZ(326px);

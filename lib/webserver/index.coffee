@@ -26,7 +26,7 @@ module.exports = (App, config, callback) ->
   webserver.use BodyParser.urlencoded {extended: true}
   webserver.use CookieParser()
   webserver.use Express.static config.watch.compiledDir
-  
+
   webserver.use ErrorHandler() if debugMode
 
   webserver.registerViewLocals = do ->
