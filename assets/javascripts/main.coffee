@@ -61,7 +61,7 @@ require
 
     $startGameLocal  = $("#btn_start_game_local_human").click -> startGame(false)
     $startGameAIEasy = $("#btn_start_game_ai_easy").    click -> startGame(false, Ur.AI.rush)
-    $startGameAIHard = $("#btn_start_game_ai_avg").     click -> startGame(false, Ur.AI.middle)
+    $startGameAIMid  = $("#btn_start_game_ai_avg").     click -> startGame(false, Ur.AI.middle)
     $startGameAIHard = $("#btn_start_game_ai_hard").    click -> startGame(false, Ur.AI.hard)
     $startGameRemote = $("#btn_start_game_remote").     click -> startGame(true)
 

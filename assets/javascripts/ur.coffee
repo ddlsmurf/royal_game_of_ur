@@ -250,6 +250,22 @@ define [
       addDangerOfTokenAt(token) for token in list
       result[safe] = 0 for safe in Ur.SpecialCellPositions.safe# when @["#{their_side}_indices"].indexOf(safe) == -1
       result
+    ###
+    Qualify a potential move and return object with properties:
+
+    - `move`: Cell index of evaluated move
+    - `destination`: Cell index of where the token would end
+    - `was_danger`: If position before move was in conflict cells
+    - `was_rethrow`: If position before move was a rethrow cell
+    - `rethrow`: If destination is a rethrow cell
+    - `safe`: If destination is the safe cell
+    - `danger`: If destination is in the conflict cells
+    - `capture`: If not undefined, index (in the state array) of enemy token that would be captured
+    - `wastes`: Number of potential moves not taken because the token would end past the final cell
+
+    @param [number] move Cell index of move to qualify (if valid)
+    @return [object]
+    ###
     evaluateMove: (move) ->
       [ our_side, their_side ] = @getSideNames()
       result = { move }
@@ -324,7 +340,7 @@ define [
       result
     ###
     Play given move and update game state accordingly. Throws if the move isn't valid.
-    @param [number] p Cell number to play
+    @param [number] p Cell number to play, -1 to pass
     ###
     playMove: (p) ->
       [ our_side, their_side ] = @getSideNames()
@@ -390,6 +406,9 @@ define [
       stats = [ @left_stats, @right_stats ].map (s) -> s?.writeToArray()
       stats = undefined unless stats[0] || stats[1]
       [ @turn, @dice, [ @left_remaining, @left_indices... ], [ @right_remaining, @right_indices... ], [ @left_captures, @right_captures ], stats ]
+    ###
+    Calls `loadFromArray` but reverts to previous state in case of invalid argument
+    ###
     safeLoadFromArray: (data) ->
       previous = @writeToArray() if @turn?
       @loadFromArray(data)
